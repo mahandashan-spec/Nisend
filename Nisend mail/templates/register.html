@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* General Styles */
+        body {
+            background-image: url('../static/prof.png');
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .register {
+            background-color: #fff;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            width: 80%;
+            max-width: 1200px;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .register:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Picture Styles */
+        .picture {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .picture img {
+            height: 480px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 16px 0 0 16px;
+        }
+
+        /* Form Container Styles */
+        .reg_container {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        /* Form Styles */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form input,
+        .form p {
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            color: #495057;
+        }
+
+        .form input:focus,
+        .form p:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button Styles */
+        .form .sub {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .form .sub:hover {
+            background-color: #0056b3;
+        }
+
+        .form button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .form a {
+            text-decoration: none;
+            margin-left: 220px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register">
+        <div class="picture"><img src="../static/2d0d4d06-ee7d-49ed-afd5-8c2db7a64ec2.webp" alt=""></div>
+        <div class="reg_container">
+            <form class="form">
+                <input class="username" type="text" placeholder="Username">
+                <input id="password" type="password" placeholder="Password">
+                <input id="repassword" type="password" placeholder="Repeat Password">
+                <input class="mail" type="text" id="email" name="email" placeholder="example@nisend.com"
+                    pattern="[a-zA-Z0-9._%+-]+@nisend\.com" title="لطفا ایمیلی با فرمت example@nisend.com وارد کنید">
+                <button class="sub"> <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span> Register</button>
+                <a href="/login">login</a>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../static/app.js"></script>

@@ -1,0 +1,635 @@
+:root {
+    --main-light: #0099ff;
+    --main-dark: rgb(61, 61, 61);
+}
+
+* {
+    user-select: none;
+}
+
+.nav-logo {
+    color: rgb(255, 255, 255);
+}
+
+.nav-logo-title {
+    font-size: 2.2rem;
+    padding-left: 15px;
+    font-family: cursive;
+}
+
+.navbar {
+    margin-top: 20px;
+    margin-left: 30px;
+    background-color: var(--main-light);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    border-radius: 25px;
+    width: 95%;
+    position: static;
+}
+
+.nav-items {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.main-i {
+    display: flex;
+    flex-direction: row;
+}
+
+.i {
+    margin-right: 25px;
+    cursor: pointer;
+    color: aliceblue;
+    font-size: 1rem;
+    margin-top: 7px;
+}
+
+.main-i .i:hover {
+    color: #2b2b2b;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+}
+
+.nav-ac ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+/* navbar */
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+.app {
+    margin-top: 50px;
+    width: 100%;
+    margin-left: 500px;
+}
+
+/* استایل‌های قبلی داشبورد (دکمه‌ها و خط) */
+.dash-items {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.dash-i {
+    position: relative;
+    padding-bottom: 10px;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.3s ease;
+}
+
+.dash-i.active {
+    color: #007bff;
+}
+
+.indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.dash-i.active .indicator {
+    background-color: #007bff;
+}
+
+/* --- استایل‌های جدید برای محتوا --- */
+
+.dash-content {
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 200px;
+    margin: 20px;
+    background-color: #ffffff;
+}
+
+/* همه پنل‌ها به صورت پیش‌فرض مخفی هستن */
+.dash-panel {
+    display: none;
+    animation: fadeIn 0.5s ease;
+    /* انیمیشن نرم برای نمایش */
+}
+
+/* فقط پنلی که کلاس active-panel داره نمایش داده میشه */
+.dash-panel.active-panel {
+    display: block;
+}
+
+/* انیمیشن ساده برای نرم‌تر شدن باز شدن */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ////////////////////////////////////////////////////////////// */
+.inbox-mail {
+    margin-bottom: 10px;
+    /* فاصله بین ایمیل‌ها */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    /* نشان می‌دهد که قابل کلیک است */
+    border-radius: 5px;
+    /* گوشه‌های گرد برای کل باکس ایمیل */
+}
+
+/* قسمت اصلی هر ایمیل (سربرگ) */
+.main-box {
+    border: 1.3px solid rgb(217, 217, 217);
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 8px;
+    /* کمی padding برای متن‌ها */
+    box-sizing: border-box;
+    /* برای اینکه padding و border روی عرض تاثیر نگذارد */
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.main-box:hover {
+    border: 1.3px solid rgb(179, 179, 179);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* استایل متن ایمیل */
+.txt {
+    /* پیش‌فرض: پنهان */
+    visibility: hidden;
+    max-height: 0;
+    /* برای انیمیشن بسته شدن */
+    overflow: hidden;
+    /* جلوگیری از دیده شدن محتوای اضافی */
+    transition: max-height 0.3s ease, visibility 0.3s ease, padding 0.3s ease;
+    /* انیمیشن نرم */
+    padding: 0 8px;
+    /* padding افقی، عمودی صفر */
+    box-sizing: border-box;
+}
+
+/* وقتی ایمیل فعال است، متن نمایش داده شود */
+.inbox-mail.active .txt {
+    visibility: visible;
+    max-height: 300px;
+    /* یک مقدار کافی برای نمایش متن */
+    padding: 10px 8px;
+    /* padding عمودی اضافه می‌شود */
+}
+
+/* اطمینان از اینکه وقتی inbox فعال است، main-box هم استایل مناسب داشته باشد */
+.inbox-mail.active .main-box {
+    border-color: rgb(179, 179, 179);
+    /* رنگ border کمی تیره‌تر */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+    /* کمی بالا بردن */
+}
+
+
+.archive-btn {
+    position: absolute;
+    top: 4.5px;
+    right: 10px;
+    opacity: 0;
+    visibility: hidden;
+    border: none;
+    background: white;
+    padding: 6px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    font-size: 18px;
+}
+
+/* ظاهر شدن در حالت hover روی inbox-mail */
+.inbox-mail:hover .archive-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* جلوه Hover روی خود دکمه */
+.archive-btn:hover {
+    background: rgb(240, 240, 240);
+}
+
+/* .txt {
+    margin-left: -350px;
+} */
+
+/* .in-div {
+    margin-left: ;
+} */
+
+/* //////////////////////////////////////////////////////////// */
+/* compose */
+
+.compose {
+    margin-top: -60px;
+    margin-left: 35px;
+}
+
+/* دکمه اصلی */
+.compose-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 600;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+    color: white;
+
+    background: var(--main-light);
+
+
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.compose-btn:hover {
+    transform: translateY(-3px);
+}
+
+/* Active (وقتی کلیک میشه) */
+.compose-btn:active {
+    transform: translateY(0);
+}
+
+/* ////////////////////////////////////////////// */
+/* form */
+
+/* نمایش/عدم نمایش */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 56px 16px 16px;
+    z-index: 9999;
+    margin-top: -50px;
+}
+
+/* حالت باز */
+.overlay.active {
+    display: flex;
+}
+
+/* پنجره */
+.compose-modal {
+    width: min(720px, 100%);
+    background: #d4d8df;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+    animation: popIn 180ms ease forwards;
+}
+
+@keyframes popIn {
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.compose-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.compose-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--main-light);
+    font-weight: 700;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.15);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.34);
+    color: var(--main-light);
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* فرم */
+.compose-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.label {
+    color: var(--main-light);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Inputs */
+.compose-modal input,
+.compose-modal textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid #b8b8b8;
+    color: #e5e7eb;
+
+    border-radius: 12px;
+    padding: 12px 12px;
+
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.compose-modal textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+.compose-modal input:focus,
+.compose-modal textarea:focus {
+    border-color: var(--main-light);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Footer (Send/Discard) */
+.compose-footer {
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ghost-btn {
+    background: rgba(46, 46, 46, 0.616);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e5e7eb;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease;
+}
+
+.ghost-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(35, 35, 35, 0.92);
+}
+
+.send-btn {
+    background: linear-gradient(135deg, var(--main-light) 20%, #6366f1);
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(79, 70, 229, 0.25);
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+.send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 34px rgba(79, 70, 229, 0.35);
+    filter: saturate(1.05);
+}
+
+/* موبایل */
+@media (max-width: 560px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+#emailModal .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#emailModal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.email-body {
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+@media (max-width: 1100px) {
+    .app {
+        margin-left: 200px;
+    }
+}
+
+/* -- تبلت عمودی -- */
+@media (max-width: 900px) {
+    .app {
+        margin-left: 50px;
+    }
+
+    .dash-content {
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+/* -- موبایل بزرگ (بریک‌پوینت جدید) -- */
+@media (max-width: 600px) {
+    .app {
+        margin-left: 0;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .dash-items {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-left: 0 !important;
+        /* !important فقط چون مدیا کوئری قبلی با منفی‌هاش override می‌کرد */
+    }
+
+    .dash-i {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .dash-content {
+        margin: 10px 0;
+        padding: 10px;
+        min-height: 150px;
+    }
+
+    .main-box {
+        height: auto;
+        min-height: 40px;
+        flex-direction: row;
+        padding: 8px 6px;
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .inbox-mail {
+        margin-bottom: 6px;
+    }
+
+    .compose-btn {
+        width: 70px;
+        font-size: 9px !important;
+        padding: 6px 4px;
+        margin-left: -20px;
+    }
+
+    #emailModal .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    #emailModal .close-btn {
+        font-size: 20px;
+        top: 8px;
+        right: 10px;
+    }
+
+    .email-body {
+        font-size: 13px;
+    }
+}
+
+/* -- موبایل خیلی کوچک -- */
+@media (max-width: 400px) {
+    .app {
+        padding: 0 5px;
+    }
+
+    .navbar {
+        margin-left: 10px;
+        position: fixed;
+        margin-top: -50px;
+    }
+
+    .dash-items {
+        gap: 10px;
+        
+    }
+
+    .dash-i {
+        font-size: 11px;
+        margin-top: 50px;
+    }
+
+    .main-box {
+        font-size: 8px;
+        padding: 5px 4px;
+    }
+
+    .txt {
+        font-size: 11px;
+    }
+
+    .nav-item {
+        display: none;
+    }
+
+    .nav-logo-title {
+        font-size: 20px;
+    }
+
+    .m {
+        font-size: 10px;
+        margin-top: 20px;
+    }
+
+    .nav-ac {
+        margin-top: -55px;
+        margin-left: 110px;
+    }
+}
+
+/* -- رفع مشکل نمایش مودال در موبایل -- */
+@media (max-width: 768px) {
+    #emailModal .modal-content {
+        width: 90%;
+        max-width: 90%;
+    }
+}

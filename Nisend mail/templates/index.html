@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nisend</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="main">
+        <div class="navbar shadow">
+            <div class="nav-logo">
+                <p class="nav-logo-title">Nisend</p>
+            </div>
+
+            <div class="nav-item">
+                <ul class="nav-items">
+                    <div class="main-i">
+                        <li class="i">Home</li>
+                        <li class="i">Platform</li>
+                        <li class="i">Nisend | send it</li>
+                        <li class="i">Contact us</li>
+                        <li class="i">about</li>
+                    </div>
+                </ul>
+            </div>
+
+            <div class="nav-ac">
+                <ul>
+                    {% if m%}
+                    <li class="i"><i class="fa-regular fa-user"></i></li>
+                    {% else %}
+                    <li class="i"><a style="text-decoration: none; color: aliceblue;" href="/mail/Register">Register</a>
+                    </li>
+                    <li class="i"><a style="text-decoration: none; color: aliceblue;" href="/mail/login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="img col-4">
+                <img src="../static/2d0d4d06-ee7d-49ed-afd5-8c2db7a64ec2.webp" alt="">
+            </div>
+            <div class="txt">
+                <h1
+                    style="font-family: cursive; font-weight: 900; letter-spacing: 30px; margin-top: 130px; margin-left: -33px;">
+                    Nisend</h1>
+                <h2 style="letter-spacing: 14px; font-size: 2.2rem; margin-left: -35px; font-weight: 300;">Community
+                </h2>
+                <h4 style="margin-left: -33px; letter-spacing: 11px; font-size: small;">with our platform</h4>
+            </div>
+        </div>
+
+        <div class="btns">
+            <button class="btn btn-primary btn"><a style="color: rgb(255, 255, 255);" href="/Nisend-mail">Start for
+                    free</a></button>
+        </div>
+    </div>
+</body>
+
+</html>

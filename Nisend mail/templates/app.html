@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nisend-mail</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
+    <link rel="stylesheet" href="../static/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="navbar shadow">
+            <div class="nav-logo">
+                <p class="nav-logo-title">Nisend-mail</p>
+            </div>
+
+            <div class="nav-item">
+                <ul class="nav-items">
+                    <div class="main-i">
+                        <li class="i">Home</li>
+                        <li class="i">Platform</li>
+                        <li class="i">Nisend | send it</li>
+                        <li class="i">Contact us</li>
+                        <li class="i">about</li>
+                    </div>
+                </ul>
+            </div>
+
+            <div class="nav-ac">
+                <ul>
+                    {% if m%}
+                    <li style="font-weight: 700; margin-top: 14px;" class="m i">{{ user }}</li>
+                    <button id="btnLogout" style="margin-right: 15px; margin-top: 10px; color: white;"
+                        class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
+                    {% else %}
+                    <li class="i">Register</li>
+                    <li class="i">Login</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="app">
+        <div class="dash-items">
+            <!-- data-target مشخص می‌کنه که این دکمه کدوم بخش رو باز کنه -->
+            <div class="dash-i active" data-target="inbox">
+                <i class="fa-solid fa-inbox"></i> inbox
+                <div class="indicator"></div>
+            </div>
+            <div class="dash-i" data-target="sent">
+                <i class="fa-solid fa-paper-plane"></i> sent
+                <div class="indicator"></div>
+            </div>
+            <div class="dash-i" data-target="archived">
+                <i class="fa-solid fa-box-archive"></i> Archived
+                <div class="indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="compose">
+        <button class="compose-btn"><i class="fa-solid fa-pen"></i> Compose</button>
+    </div>
+    <audio id="myAudio" src="../static/63408f81ba92d.mp3"></audio>
+
+
+
+    <div class="dash-content">
+        <div id="inbox" class="dash-panel active-panel">
+            <!-- محتوا توسط JS پر می‌شود -->
+            <!-- <div class="inbox-mail">
+                <div class="main-box">
+                    <button class="archive-btn">📥</button>
+                    <div class="sender in-div">
+                        <p>Nisend-twitter</p>
+                    </div>
+                    <div class="mail">
+                        <p>mahandash@Nisend.com</p>
+                    </div>
+                    <div style="color: rgba(124, 124, 124, 0.678);" class="sub in-div">
+                        <p>subject(Your Code)</p>
+                    </div>
+                    <div style="font-size: 0.8rem;" class="date in-div">
+                        <p>2024/2/3 - 14:30</p>
+                    </div>
+                </div>
+                <div class="txt">
+                    <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis nam illum odio laboriosam,
+                        veroquas qui.</p>
+                </div>
+            </div> -->
+        </div>
+
+        <div id="sent" class="dash-panel">
+            <div id="s" class="dash-panel active-panel">
+                <!-- اینجا خالیه و با جاوااسکریپت پر میشه -->
+            </div>
+        </div>
+
+
+        <div id="archived" class="dash-panel">
+            <h2>آرشیو شده‌ها</h2>
+            <p>ایمیل‌های قدیمی و بایگانی شده اینجا هستن...</p>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="composeOverlay" aria-hidden="true">
+        <div class="compose-modal" role="dialog" aria-modal="true">
+            <div class="compose-header">
+                <div class="compose-title">
+                    <span class="dot"></span>
+                    <span>New message</span>
+                </div>
+
+                <button class="icon-btn close-btn" id="closeCompose" aria-label="Close">
+                    ✕
+                </button>
+            </div>
+
+            <form style="color: black;" class="compose-form" id="composeForm">
+                <!-- Receiver -->
+                <div class="row">
+                    <label class="label" for="receiver">To</label>
+                    <input style="color: black;" id="receiver" name="receiver" type="email"
+                        placeholder="name@Nisend.com" required />
+                </div>
+
+                <!-- Subject -->
+                <div class="row">
+                    <label class="label" for="subject">Subject</label>
+                    <input style="color: black;" id="subject" name="subject" type="text" placeholder="" required />
+                </div>
+
+                <!-- Text -->
+                <div class="row">
+                    <label class="label" for="body">Text</label>
+                    <textarea style="color: black;" id="body" name="body" placeholder="Context" rows="10"
+                        required></textarea>
+                </div>
+
+                <div class="compose-footer">
+                    <div class="left-actions">
+                        <button type="button" class="ghost-btn" id="discardBtn">Discard</button>
+                    </div>
+
+                    <div class="right-actions">
+                        <button type="submit" class="send-btn">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+
+    function resetSent() {
+        fetch("/sent")
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // اینجا آیدی div مربوط به sent رو میگیریم
+                    const container = document.getElementById("sent");
+                    container.innerHTML = "";
+
+                    if (data.emails.length === 0) {
+                        container.innerHTML = "<p>No emails in your sent.</p>";
+                        return;
+                    }
+
+                    data.emails.forEach(email => {
+                        const mailDiv = document.createElement("div");
+                        mailDiv.className = "inbox-mail";
+
+                        mailDiv.onclick = function () {
+                            mailDiv.classList.toggle("active");
+                        };
+
+                        mailDiv.innerHTML = `
+                        <div class="main-box">
+                            <button class="archive-btn">📥</button>
+                            <div class="sender in-div">
+                                <p>${email.sender_username}</p>
+                            </div>
+                            <div class="mail">
+                                <p>To : ${email.receiver_mail}</p>
+                            </div>
+                            <div style="color: rgba(124, 124, 124, 0.678);" class="sub in-div">
+                                <p>${email.subject}</p>
+                            </div>
+                            <div style="font-size: 0.8rem;" class="date in-div">
+                                <p>${email.sent_at}</p>
+                            </div>
+                        </div>
+                        <div class="txt">
+                            <p>${email.body_preview}</p>
+                        </div>
+                    `;
+                        container.appendChild(mailDiv);
+                    });
+
+                } else {
+                    alert("Failed to load sent: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while loading sent.");
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        function resetInbox() {
+            fetch("/inbox")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const container = document.getElementById("inbox");
+                        container.innerHTML = "";
+
+                        if (data.emails.length === 0) {
+                            container.innerHTML = "<p>No emails in your inbox.</p>";
+                            return;
+                        }
+
+                        data.emails.forEach(email => {
+                            const mailDiv = document.createElement("div");
+                            mailDiv.className = "inbox-mail";
+
+                            // تنظیم رنگ پس‌زمینه بر اساس وضعیت خوانده/نخوانده
+                            if (email.is_read === false) { // استفاده از === برای مقایسه دقیق‌تر
+                                mailDiv.style.backgroundColor = "lightblue";
+                            } else {
+                                mailDiv.style.backgroundColor = "white";
+                            }
+
+                            // تعریف event listener برای کلیک
+                            mailDiv.onclick = function () {
+                                mailDiv.classList.toggle("active");
+                                if (email.is_read === false) {
+                                    fetch('/mark-as-read', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({ mail_id: email.id })
+                                    })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Network response was not ok');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log('Email marked as read:', email.id);
+                                            mailDiv.style.backgroundColor = "white";
+                                            email.is_read = true; // به‌روزرسانی وضعیت در متغیر جاوااسکریپت
+                                            mailDiv.setAttribute('data-is-read', 'true');
+                                        })
+                                        .catch(error => {
+                                            console.error('Error marking email as read:', error);
+                                        });
+                                } else {
+                                    console.log('Email already read, opening...');
+                                }
+                            };
+
+                            mailDiv.innerHTML = `
+                        <div class="main-box">
+                            <button class="archive-btn"><i class="fa-solid fa-box-archive"></i></button>
+                            <div class="sender in-div">
+                                <p>${email.sender_username}</p>
+                            </div>
+                            <div class="mail">
+                                <p>${email.sender_mail}</p>
+                            </div>
+                            <div style="color: rgba(124, 124, 124, 0.678);" class="sub in-div">
+                                <p>${email.subject}</p>
+                            </div>
+                            <div style="font-size: 0.8rem;" class="date in-div">
+                                <p>${email.sent_at}</p>
+                            </div>
+                        </div>
+                        <div class="txt">
+                            <p>${email.body_preview}</p>
+                        </div>
+                    `;
+
+                  
+                            container.appendChild(mailDiv);
+                        }); // پایان forEach
+
+                    } else {
+                        // اگر پاسخ از /inbox موفقیت‌آمیز نبود
+                        alert("Failed to load inbox: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    // مدیریت خطاهای شبکه یا JSON.parse
+                    console.error('Error:', error);
+                    alert("An error occurred while loading inbox.");
+                });
+        }
+
+
+        // ////////
+        resetInbox();
+        resetSent();
+
+    });
+
+
+
+
+
+
+    const menuItems = document.querySelectorAll('.dash-i');
+    const panels = document.querySelectorAll('.dash-panel');
+
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // غیرفعال کردن آیتم‌های قبلی
+            menuItems.forEach(i => i.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active-panel'));
+
+            // فعال کردن آیتم فعلی
+            item.classList.add('active');
+            const targetId = item.getAttribute('data-target');
+            const targetPanel = document.getElementById(targetId);
+            if (targetPanel) {
+                targetPanel.classList.add('active-panel');
+            }
+        });
+    });
+
+    const overlay = document.getElementById("composeOverlay");
+    const openBtn = document.querySelector(".compose-btn"); // همان دکمه‌ای که ساختی
+    const closeBtn = document.getElementById("closeCompose");
+    const discardBtn = document.getElementById("discardBtn");
+    const composeForm = document.getElementById("composeForm");
+
+    function openCompose() {
+        overlay.classList.add("active");
+        overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeCompose() {
+        overlay.classList.remove("active");
+        overlay.setAttribute("aria-hidden", "true");
+        composeForm.reset();
+    }
+
+    openBtn.addEventListener("click", openCompose);
+    closeBtn.addEventListener("click", closeCompose);
+    discardBtn.addEventListener("click", closeCompose);
+
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeCompose();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && overlay.classList.contains("active")) {
+            closeCompose();
+        }
+    });
+
+    composeForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        closeCompose();
+    });
+
+
+
+    const btnLogout = document.querySelector("#btnLogout");
+    btnLogout.addEventListener("click", () => {
+        fetch("/logout", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        })
+            .then(Response => Response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/";
+                    alert("loged out!");
+                } else {
+                    alert("faild: " + data.message);
+                }
+            })
+    })
+
+
+
+    const composebtn = document.querySelector(".send-btn");
+    const receiver = document.querySelector("#receiver");
+    const subject = document.querySelector("#subject");
+    const text = document.querySelector("#body");
+    let checked = () => {
+        if (receiver.value && text.value) {
+            return true
+        } else {
+            alert("complate the receiver and body to send.")
+            return false
+        }
+    }
+
+    composebtn.addEventListener("click", () => {
+        let checkedStart = checked();
+        auconstdioPlayer = document.getElementById('myAudio');
+        auconstdioPlayer.play();
+
+        const formData = new URLSearchParams({
+            'receiver': receiver.value,
+            'subject': subject.value || '(No subject)', // اگر خالی بود پیش‌فرض بذار
+            'text': text.value
+        });
+
+        if (checkedStart) {
+            fetch("/sendMail", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData.toString()
+            })
+                .then(Response => Response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        receiver.value = "";
+                        subject.value = "";
+                        text.value = "";
+                        window.location.href = "/Nisend-mail";
+                    } else {
+                        alert("faild: " + data.message);
+                    }
+                })
+        }
+    })
+
+
+</script>
